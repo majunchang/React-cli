@@ -3,14 +3,13 @@
 // assetsPublicPath 在 /config/index.js 中配置，由 imports-loader 注入
 
 import './index.css'
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
 
 // import store from './store/index'
-import App from './router/routes'
+import App from './router/index'
 
 const mountNode = document.getElementById('app')
 

@@ -5,7 +5,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { hot } from 'react-hot-loader'
 
-import HelloWorld from '../containers/App'
+import HelloWorld from '../page/HelloWorld'
 
 const App = () => (
   <div>

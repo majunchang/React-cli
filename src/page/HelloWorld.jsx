@@ -12,7 +12,7 @@ export default class HelloWorld extends React.Component {
     let {name} = this.state
     return (
       <div>
-        <h1>Hello, {name}</h1>
+        <h3>Hello, {name}</h3>
       </div>
     )
   }

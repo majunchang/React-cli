@@ -12,31 +12,22 @@ const namedAssets = utils.resolve(current.conf.assetsSubDirectory)
 
 module.exports = {
   context: common.context,
-  entry: utils.computeEntry(config, packageConfig),
-  output: utils.computeOutput(config),
+  entry: utils.computeEntry(config, packageConfig), //  根据环境返回对应的入口配置
+  output: utils.computeOutput(config), // 根据环境返回对应的出口配置
   cache: true,
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.css'],
-    modules: ['node_modules', common.sourceCode]
+    extensions: ['.js', '.json', '.jsx', '.css'], //  默认的扩展名 使用的引用相关文件的时候 可以不带相应的扩展名
+    modules: ['node_modules', common.sourceCode] // 解析模块时  应该搜索的目录
   },
-  module: {
+  module: { //  https://www.webpackjs.com/concepts/loaders/   配置模块处理
     rules: [
-      // {
-      // 	test: /\.bundle\.js$/,
-      // 	loader: 'bundle-loader',
-      // 	include: common.sourceCode,
-      // 	options: {
-      // 		lazy: true,
-      // 		name: '[name]'
-      // 	}
-      // },
       {
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
-        enforce: 'pre',
+        enforce: 'pre', //  预先进行eslint的语法减产
         include: common.sourceCode,
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter') // https://www.npmjs.com/package/eslint-friendly-formatter
         }
       },
       {
@@ -79,6 +70,17 @@ module.exports = {
     ]
   },
   plugins: [
+    /*
+      https://www.npmjs.com/package/html-webpack-plugin
+      https://segmentfault.com/a/1190000013883242
+      配置项详解
+      template: 指定你生成的文件所依赖哪一个html文件模板
+      filename: html的文件名 默认是index.html
+      inject: 'body' script标签 位于html文件的body底部
+      minify: 对生成的HTML文件进行压缩
+      xhtml:  设置为true
+      cache: 默认为true  标示内容变化的时候 生成一个新的文件
+    */
     new HtmlWebpackPlugin({
       template: utils.resolve(common.sourceCode)('index.html'),
       filename: 'index.html',

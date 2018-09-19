@@ -5,7 +5,7 @@
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+// import { Provider } from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
 
 // import store from './store/index'
@@ -18,10 +18,8 @@ const mountNode = document.getElementById('app')
    被 Provider 组件包裹的整个 APP 中的每个组件，都可以通过 connect 去连接 store
 */
 ReactDOM.render(
-  <Provider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   mountNode
 )

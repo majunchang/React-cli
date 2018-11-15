@@ -20,7 +20,13 @@ webpack(webpackConfig, function (err, stats) {
   }
   process
     .stdout
-    .write(stats.toString({colors: true, modules: false, children: false, chunks: false, chunkModules: false}) + '\n\n')
+    .write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n\n')
 
   if (stats.hasErrors()) {
     console.log(chalk.red('  Build failed with errors.\n'))

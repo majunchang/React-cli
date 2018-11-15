@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
-      "start": "npm run dev",
-      "build": "node build/build.js",
-      "server": "nodemon server/index.js"
+    "build": "node build/build.js",
+    "server": "nodemon server/index.js",
+    "start":"webpack-dev-server --inline --port 8080"
   },
   "keywords": [],
-  "author": "",
+  "author": "majunchang",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",

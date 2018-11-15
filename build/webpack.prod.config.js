@@ -10,7 +10,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin'); //  分离出�
 const CleanWebpackPlugin = require('clean-webpack-plugin');    //  A webpack plugin to remove/clean your build folder(s) before building
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'); //  优化css的插件
 //  https://blog.csdn.net/wbiokr/article/details/73011288  在webpack中拷贝文件和文件夹的插件
-const CopyWebpackPlugin = require('copy-webpack-plugin'); 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.config');
 const utils = require('./utils');
 const config = require('../config/index');
@@ -21,9 +21,9 @@ const current = utils.currentEndAndConf(config);
 let reportPlugin = [];
 
 if (current.conf.bundleAnalyzerReport) {
-   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-   reportPlugin.push(new BundleAnalyzerPlugin());
+  reportPlugin.push(new BundleAnalyzerPlugin());
 }
 
 // workbox 插件
@@ -50,68 +50,68 @@ let workboxPlugin = [];
 // }
 
 module.exports = merge(baseWebpackConfig, {
-   devtool: current.conf.productionSourceMap ? '#source-map' : false,
-   module: {
-     /*
-      https://www.npmjs.com/package/extract-text-webpack-plugin
-      ExtractTextPlugin 该插件的三个参数的意义
-      use: 使用什么样的loader 去编译文件
-      fallback:   编译后使用什么loader 去提取css文件
-      publicfile: 用来覆盖项目路径 生成该css文件的文件路径
-     */
-      rules: [
-         {
-            test: /\.(scss|sass|css)$/,
-            include: common.sourceCode,
-            use: ExtractTextPlugin.extract({
-               fallback: 'style-loader',
-               use: utils.computeStyleLoader(true, ['css-loader', 'postcss-loader', 'sass-loader'])
-            })
-         }
-      ]
-   },
-   plugins: [
-      new CleanWebpackPlugin(['dist'], { root: common.context }),
-       // 根据模块的相对路径生成一个四位数的hash作为模块id, 避免解析顺序引起的 hash 变化   //  https://www.webpackjs.com/plugins/hashed-module-ids-plugin/
-      new webpack.HashedModuleIdsPlugin(),
-       // 作用域提升插件    https://cloud.tencent.com/developer/section/1477569
-      new webpack.optimize.ModuleConcatenationPlugin(),
-      // 设置生产环境变量
-      new webpack.DefinePlugin({ 'process.env.NODE_ENV': current.conf.env.NODE_ENV }),
-      // 配合输出 css
-      new ExtractTextPlugin({
-         filename: utils.resolve(current.conf.assetsSubDirectory)('css/[name].[contenthash:10].css'),
-         disable: false,
-         allChunks: true
-      }),
-       // 优化合并输出的css
-       // https://www.npmjs.com/package/optimize-css-assets-webpack-plugin
-       // 
-      new OptimizeCSSPlugin({ cssProcessorOptions: { safe: true } }),
-      // 压缩 js
-      new webpack.optimize.UglifyJsPlugin({
-         compress: {
-            warnings: false,
-            drop_debugger: true,
-            drop_console: true
-         },
-         comments: false,
-         space_colon: false
-      }),
-       // 拆分模块
-      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
-      new webpack.optimize.CommonsChunkPlugin({ name: 'runtime' }),
-      // new CopyWebpackPlugin([
-      //    {
-      //       from: 'src/manifest.json',
-      //       to: 'manifest.json'
-      //    },
-      //    {
-      //       from: 'src/icon.png',
-      //       to: 'static/imgs/icon.png'
-      //    }
-      // ]),
-      ...workboxPlugin,
-      ...reportPlugin
-   ]
+  devtool: current.conf.productionSourceMap ? '#source-map' : false,
+  module: {
+    /*
+     https://www.npmjs.com/package/extract-text-webpack-plugin
+     ExtractTextPlugin 该插件的三个参数的意义
+     use: 使用什么样的loader 去编译文件
+     fallback:   编译后使用什么loader 去提取css文件
+     publicfile: 用来覆盖项目路径 生成该css文件的文件路径
+    */
+    rules: [
+      {
+        test: /\.(scss|sass|css)$/,
+        include: common.sourceCode,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: utils.computeStyleLoader(true, ['css-loader', 'postcss-loader', 'sass-loader'])
+        })
+      }
+    ]
+  },
+  plugins: [
+    new CleanWebpackPlugin(['dist'], { root: common.context }),
+    // 根据模块的相对路径生成一个四位数的hash作为模块id, 避免解析顺序引起的 hash 变化   //  https://www.webpackjs.com/plugins/hashed-module-ids-plugin/
+    new webpack.HashedModuleIdsPlugin(),
+    // 作用域提升插件    https://cloud.tencent.com/developer/section/1477569
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    // 设置生产环境变量
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': current.conf.env.NODE_ENV }),
+    // 配合输出 css
+    new ExtractTextPlugin({
+      filename: utils.resolve(current.conf.assetsSubDirectory)('css/[name].[contenthash:10].css'),
+      disable: false,
+      allChunks: true
+    }),
+    // 优化合并输出的css
+    // https://www.npmjs.com/package/optimize-css-assets-webpack-plugin
+    // 
+    new OptimizeCSSPlugin({ cssProcessorOptions: { safe: true } }),
+    // 压缩 js
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        drop_debugger: true,
+        drop_console: true
+      },
+      comments: false,
+      space_colon: false
+    }),
+    // 拆分模块
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'runtime' }),
+    // new CopyWebpackPlugin([
+    //    {
+    //       from: 'src/manifest.json',
+    //       to: 'manifest.json'
+    //    },
+    //    {
+    //       from: 'src/icon.png',
+    //       to: 'static/imgs/icon.png'
+    //    }
+    // ]),
+    ...workboxPlugin,
+    ...reportPlugin
+  ]
 });
